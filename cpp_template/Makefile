@@ -1,4 +1,4 @@
-EXE = piapprox
+EXE = exe
 
 SRC_DIR = src
 OBJ_DIR = obj

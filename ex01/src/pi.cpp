@@ -3,6 +3,7 @@
 #include <cmath>
 #include <numeric>
 #include <chrono>
+#include <vector>
 
 // F(x)
 double approx(double x) {
@@ -19,17 +20,17 @@ double pi_approx(uint64_t N){
     return res;
 }
 
-int main(int argc, char** argv) {
-    auto start = std::chrono::steady_clock::now();
+int main(int argc, const char** argv) {
 
     double res = 0;
 
     int i = (int)(argv[1][0]-48);
     uint64_t N = std::pow(10, i);
+    auto start = std::chrono::steady_clock::now();
     res = pi_approx(N);
     auto end = std::chrono::steady_clock::now();
 
-    std::printf("PI ~= %.15g (w\ %u iterations, err: %.5g, took: %u ms)\n",
+    std::printf("PI ~= %.15g (w/ %u iterations, err: %.5g, took: %u ms)\n",
             res,
             N,
             M_PI - res,
