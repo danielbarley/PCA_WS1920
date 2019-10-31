@@ -53,7 +53,7 @@ class Matrix {
             return this->data[col*nrow+row];
         };
 
-        // accessing cols
+        // accessing row
         std::valarray<double> operator() (unsigned int col) const {
             return data[std::slice(col*nrow, nrow, 1)];
         }
@@ -61,7 +61,7 @@ class Matrix {
             return data[std::slice(col*nrow, nrow, 1)];
         }
 
-        // accessing rows
+        // accessing col
         std::valarray<double> operator[] (unsigned int row) const {
             return data[std::slice(row, ncol, nrow)];
         }
@@ -80,10 +80,20 @@ class Matrix {
             return output;
         }
 
+        //variant 1: row-wise access
         Vector operator* (Vector v) {
             Vector o = Vector(this->ncol);
-            for (size_t col = 0; col < this->ncol; col++) {
-                o[col] = v * (std::valarray<double>)(*this)(col);
+            for (size_t i = 0; i < this->ncol; i++) {
+                o[i] = v * (std::valarray<double>)((*this)(i));
+            }
+            return o;
+        }
+
+        //Variant 2: column-wise access
+        Vector operator| (Vector v) {
+            Vector o = Vector(this->ncol);
+            for (size_t i = 0; i < this->ncol; i++) {
+                o[i] = v * (std::valarray<double>)((*this)[i]);
             }
             return o;
         }
@@ -99,14 +109,22 @@ int main() {
         Matrix A = Matrix(size, true);
         Vector x = Vector(size, true);
 
-        auto start = std::chrono::high_resolution_clock::now();
+        auto row_start = std::chrono::high_resolution_clock::now();
         Vector r = A * x;
-        auto end = std::chrono::high_resolution_clock::now();
+        auto row_end = std::chrono::high_resolution_clock::now();
 
-        std::printf("%u x %u: %.8gs\n",
+        auto col_start = std::chrono::high_resolution_clock::now();
+        Vector r2 = A | x;
+        auto col_end = std::chrono::high_resolution_clock::now();
+
+        std::printf("%u x %u:\tt_row = %.8gs,\tt_col = %.8gs,\tt_row/t_col = %.8g\n",
             size,
             size,
-            std::chrono::duration<double>(end - start).count());
+            std::chrono::duration<double>(row_end - row_start).count(),
+            std::chrono::duration<double>(col_end - col_start).count(),
+            std::chrono::duration<double>(row_end - row_start).count()/
+            std::chrono::duration<double>(col_end - col_start).count()
+        );
 
         (void)r;
     }
