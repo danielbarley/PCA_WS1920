@@ -10,6 +10,7 @@ includehead,includefoot,
 heightrounded, % to avoid spurious underfull messages
 ]{geometry} 
 \geometry{a4paper}
+\usepackage[ngerman]{babel}
 \usepackage{listings}
 \usepackage{fancyhdr}
 \usepackage{siunitx}
@@ -62,7 +63,7 @@ heightrounded, % to avoid spurious underfull messages
 	\caption[Messwerte]{Messwerte}
 	\begin{tabular}{c|l|l|l}
 		\hline
-		\cellcolor{gray!40}\textbf{M $\times$ N} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{row}$}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{col}$}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{Ratio}}\\
+		\cellcolor{gray!40}\textbf{M $\times$ N} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{row}$(\si{\second})}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{col}$(\si{\second})}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{Ratio}}\\
 		\hline\hline
 		10 $\times$ 10 & \num{8.545e-6} & \num{1.1626e5} & 0.73499054\\\hline
 		100 $\times$ 100 & 0.000254222 & 0.000722013 & 0.35210169\\\hline
@@ -75,6 +76,9 @@ heightrounded, % to avoid spurious underfull messages
 \end{table}
 
 \noindent \textbf{b.}
+
+Beim spaltenweisen Zugriff wird nur ein Teilsummand von $y_i$ berechnet.
+
 
 \noindent \textbf{c.}
 
