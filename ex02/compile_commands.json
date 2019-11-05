@@ -1,0 +1,6 @@
+[
+    {
+        "directory": "./",
+        "command": "g++ -Iinclude"
+    }
+]

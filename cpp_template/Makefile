@@ -30,5 +30,5 @@ run:
 	@rsync -r --update . peac:PCA/pn/$(EXE)/
 	@echo -e "\033[1;34m> compiling on remote\033[0m"
 	@ssh peac_gcc make -C PCA/pn/$(EXE)/ clean all
-	@echo -e "\033[1;34m> Running binary on remote with arg 9\033[0m"
-	@ssh peac srun time PCA/pn/$(EXE)/$(EXE).out 9
+	@echo -e "\033[1;34m> Running binary on remote\033[0m"
+	@ssh peac srun time PCA/pn/$(EXE)/$(EXE).out
