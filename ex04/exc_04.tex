@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[
+top=2cm,
+bottom=2cm,
+left=3cm,
+right=2cm,
+headheight=17pt, % as per the warning by fancyhdr
+includehead,includefoot,
+heightrounded, % to avoid spurious underfull messages
+]{geometry} 
+\geometry{a4paper}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[table]{xcolor}
+\usepackage{diagbox}
+\usepackage{lipsum}
+\fancyhf{}
+\fancyhead[CO,CE]{Parallel Computer Architecture: Exercise 4}
+\fancyfoot[C]{Group 04}
+\fancyfoot[RO, LE] {\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+
+% Assembler
+\lstdefinelanguage
+{Assembler} % based on the "x86masm" dialect
+% with these extra keywords:
+{morekeywords={call, mov}} % etc.
+
+
+
+\begin{document}
+	\begin{titlepage}
+		\centering
+
+		{\scshape\LARGE Universität Heidelberg \par}
+		\vspace{1cm}
+		{\scshape\Large Parallel Computer Architecture \par}
+		\vspace{1.5cm}
+		{\huge\bfseries Exercise 2\par}
+		\vspace{2cm}
+		{\Large\itshape Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick\par}
+		\vfill
+		
+		
+		% Bottom of the page
+		{\large Due date: 2019-11-29, 14:00\\Group 04\par}
+	\end{titlepage}
+\setcounter{section}{4}
+\subsection{Numerische Integration revisited}
+
+\subsubsection{Parallele Implementierung mittels PThreads}
+
+@todo: reason
+
+\subsubsection{Experimente und Evaluation}
+
+\noindent \textbf{a.}
+
+\begin{table}[ht]
+	\centering
+	\caption[Ausführungszeit $t_{compute}$ (\si{\second})]{Ausführungszeit $t_{compute}$ (\si{\second})}
+	\begin{tabular}{c|l|l|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Threads}{n}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{3}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{4}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{6}} \\
+		\hline\hline
+		1 &  &  & & & \\\hline
+		2 &  &  & & & \\\hline
+		4 &  &  & & & \\\hline
+		8 &  &  & & & \\\hline
+		16 &  &  & & & \\\hline
+		32 &  &  & & & \\\hline
+	\end{tabular}
+	\label{tab:tcomp}
+\end{table}
+
+\begin{table}[ht]
+	\centering
+	\caption[Ausführungszeit $t_{wall}$ (\si{\second})]{Ausführungszeit $t_{compute}$ (\si{\second})}
+	\begin{tabular}{c|l|l|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Threads}{n}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{3}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{4}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{6}} \\
+		\hline\hline
+		1 &  &  & & & \\\hline
+		2 &  &  & & & \\\hline
+		4 &  &  & & & \\\hline
+		8 &  &  & & & \\\hline
+		16 &  &  & & & \\\hline
+		32 &  &  & & & \\\hline
+	\end{tabular}
+	\label{tab:twall}
+\end{table}
+
+\noindent \textbf{b.}
+
+@todo: error
+
+\noindent \textbf{c.}
+
+@todo: discuss
+
+\subsection{Prozesse vs. Threads}
+
+\noindent \textbf{a.}
+
+Prozesse liefern die Ressourcen, welche für die Ausführung eines Programms erforderlich sind.Ein Prozess hat einen virtuellen Adressraum, ausführbaren Code, offene Handles zu Systemobjekten, einen eindeutigen Prozessidentifier, eine Prioritätsklasse, minimaler und maximaler Arbeitsbedarf und mindestens einen Ausführungsthread. Jeder Prozess startet mit einem einzelnen Thread und kann zusätzliche Threads erstellen.
+
+Ein Thread ist ein Objekt innerhalb eines Prozesses, das zeitlich festgelegt ausgeführt werden kann. Alle Threads eines Prozesses teilen sich den virtuellen Adressraum und Systemressourcen, besitzen Scheduling Prioritäten, lokalen Speicher, einen eindeutigen Threadidentifier und einen Strukturensatz, der den Thread Kontext speichert, bis die Ausführung des Threads festgelegt ist. Der Kontext beinhaltet den Maschinenregistersatz des Threads, den Kernel-Stack, einen Umgebungsblock und einen Benutzer-Stack im Adressraum des übergeordneten Prozesses.
+
+\noindent \textbf{b.}
+
+Die Kommunikation zwischen Threads ist programmiertechnisch einfacher als die zwischen mehrerer Prozesse. Kontextwechsel zwischen Threads sind schneller als Prozesswechsel. Das Betriebssystem kann Threads schneller stoppen und einen anderen starten, als mit zwei Prozessen.
+
+\subsection{Klassifikation nach Flynn}
+
+\noindent \textbf{a.}
+
+Die Zuordnung zur Klasse der MISD-Systeme ist schwierig, da mit einem Datensatz mehrere Funktionseinheiten unterschiedliche Operationen durchführen. Genau genommen unterscheiden sich die Daten somit nach der Durchführung. Des Weiteren sind sie weniger verbreitet als MIMD- und SIMD-Systeme, welche geeigneter sind für übliche parallele Datentechniken.
+
+\noindent \textbf{b.}
+
+Ein Vektorrechner
+
+Ein Feldrechner besteht aus $n$ gleichartigen rechnenden Einheiten. Diese können untereinander Daten über ein Verbindungsnetzwerk austauschen. Die Recheneinheiten besitzen eine gemeinsame Steuerung. Bei einem SIMD-System sind die Recheneinheiten Prozessoren mit on-Board Speicher. Sie werden mit einem gemeinsamen Takt und Befehlsstrom versorgt.
+
+\end{document}
