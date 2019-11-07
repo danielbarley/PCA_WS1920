@@ -43,7 +43,7 @@ heightrounded, % to avoid spurious underfull messages
 		\vspace{1cm}
 		{\scshape\Large Parallel Computer Architecture \par}
 		\vspace{1.5cm}
-		{\huge\bfseries Exercise 2\par}
+		{\huge\bfseries Exercise 4\par}
 		\vspace{2cm}
 		{\Large\itshape Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick\par}
 		\vfill
@@ -129,8 +129,8 @@ Die Zuordnung zur Klasse der MISD-Systeme ist schwierig, da mit einem Datensatz 
 
 \noindent \textbf{b.}
 
-Ein Vektorrechner
+Ein Vektorrechner bearbeitet quasi-parallel mehrere Daten durch Pipelining. Dabei werden Maschinenbefehle in Teilaufgaben zerlegt. Diese Teilaufgaben werden für mehrere Befehle parallel ausgeführt.
 
-Ein Feldrechner besteht aus $n$ gleichartigen rechnenden Einheiten. Diese können untereinander Daten über ein Verbindungsnetzwerk austauschen. Die Recheneinheiten besitzen eine gemeinsame Steuerung. Bei einem SIMD-System sind die Recheneinheiten Prozessoren mit on-Board Speicher. Sie werden mit einem gemeinsamen Takt und Befehlsstrom versorgt.
+Beim Feldrechner berechnen mehrere Recheneinheiten parallel die gleiche Operation auf verschiedenen Daten.
 
 \end{document}
