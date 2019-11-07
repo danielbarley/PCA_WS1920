@@ -77,8 +77,7 @@ heightrounded, % to avoid spurious underfull messages
 
 \noindent \textbf{b.}
 
-Beim spaltenweisen Zugriff wird nur ein Teilsummand von $y_i$ berechnet.
-
+Der spaltenweise Zugriff auf die bei uns implementierte Struktur wird durch das verteilte Zugriffsmuster langsamer. Speichert man Reihen nacheinander in einem Array, sind Spaltenzugriffe im gesamten Array verteilt und nicht in kontinuierlichen Blöcken erreichbar. Kontinuierliche Blöcke werden in modernen CPUs bevorzugt, da diese fast vollständig im Cache liegen können und es nicht so viele Cache-Misses gibt.
 
 \noindent \textbf{c.}
 
