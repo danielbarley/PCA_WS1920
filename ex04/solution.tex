@@ -19,13 +19,6 @@ heightrounded, % to avoid spurious underfull messages
 \usepackage[table]{xcolor}
 \usepackage{diagbox}
 \usepackage{lipsum}
-\fancyhf{}
-\fancyhead[CO,CE]{Parallel Computer Architecture: Exercise 4}
-\fancyfoot[C]{Group 04}
-\fancyfoot[RO, LE] {\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
-\pagestyle{fancy}
 
 % Assembler
 \lstdefinelanguage
@@ -33,25 +26,43 @@ heightrounded, % to avoid spurious underfull messages
 % with these extra keywords:
 {morekeywords={call, mov}} % etc.
 
+% Lecture Name, exercise number, group number/members
+\newcommand{\lecture}{Parallel Computer Architecture}
+\newcommand{\exercise}{Exercise 4}
+\newcommand{\groupnumber}{Group 04}
+\newcommand{\groupmembersshort}{Barley, Barth, Nisblé}
+\newcommand{\groupmemberslist}{Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick}
+\newcommand{\duedate}{2019-11-29, 14:00}
 
+\fancyhf{}
+\fancyhead[L]{\groupnumber}
+\fancyhead[R]{\textsc{\groupmembersshort}}
+\fancyfoot[C]{\lecture: \exercise}
+\fancyfoot[R] {\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
 
 \begin{document}
 	\begin{titlepage}
 		\centering
-
-		{\scshape\LARGE Universität Heidelberg \par}
-		\vspace{1cm}
-		{\scshape\Large Parallel Computer Architecture \par}
+		
+		{\scshape\LARGE Universität Heidelberg\\Institute for Computer Engineering (ZITI) \par}
 		\vspace{1.5cm}
-		{\huge\bfseries Exercise 4\par}
+		{\scshape\Large Master of Science Computer Engineering \par}
+		\vspace{0.5cm}
+		{\scshape\Large \lecture \par}
+		\vspace{1.5cm}
+		{\huge\bfseries \exercise \par}
 		\vspace{2cm}
-		{\Large\itshape Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick\par}
+		{\Large \groupnumber \itshape  \\ \groupmemberslist \par}
 		\vfill
 		
 		
 		% Bottom of the page
-		{\large Due date: 2019-11-29, 14:00\\Group 04\par}
+		{\large Due date \duedate \par}
 	\end{titlepage}
+
 \setcounter{section}{4}
 \subsection{Numerische Integration revisited}
 
