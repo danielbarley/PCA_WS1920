@@ -31,6 +31,9 @@
 *.out
 *.app
 
+# ALE
+compile_commands.json
+
 #*.pdf
 *.gdb_history
 
