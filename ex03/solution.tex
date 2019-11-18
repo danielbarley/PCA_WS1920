@@ -69,35 +69,33 @@ heightrounded, % to avoid spurious underfull messages
 
 \subsubsection{Experimente und Evaluation}
 
-\noindent \textbf{a.}
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.9\linewidth]{../plot}
-	\caption[Messwerte in doppelt logarithmischer Darstellung]{Messwerte in doppelt logarithmischer Darstellung}
-	\label{fig:plot}
-\end{figure}
+\noindent \textbf{a., b.}
 
 \begin{table}[ht]
 	\centering
 	\caption[Messwerte]{Messwerte}
-	\begin{tabular}{c|l|l}
+	\begin{tabular}{c|l|l|l}
 		\hline
-		\cellcolor{gray!40}\textbf{N $\times$ N, m} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{compute}$(\si{\second})}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{wall}$(\si{\second})}}\\
+		\cellcolor{gray!40}\textbf{N $\times$ N, m} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{compute}$(\si{\second})}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{compute,avg}$(\si{\second})}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{$t_{wall}$(\si{\second})}}\\
 		\hline\hline
-		100 $\times$ 100, 35 & 0.505719 & 0.518\\\hline
-		500 $\times$ 500, 175 & 13.1445 & 13.994\\\hline
-		1000 $\times$ 1000, 350 & 52.9463 & 53.073\\\hline
-		5000 $\times$ 5000, 1750 & 1352.53 & 1355.399\\\hline
-		10000 $\times$ 10000, 3500 & 5392.75 & 5404.44\\\hline
+		100 $\times$ 100, 35 & 0.505719 & 0.518 & \num{5.05719e-4} \\\hline
+		500 $\times$ 500, 175 & 13.1445 & 13.994 & 0.0131445 \\\hline
+		1000 $\times$ 1000, 350 & 52.9463 & 53.073 & 0.0529463\\\hline
+		5000 $\times$ 5000, 1750 & 1352.53 & 1355.399 & 1.35253\\\hline
+		10000 $\times$ 10000, 3500 & 5392.75 & 5404.44 & 5.39275\\\hline
 	\end{tabular}
 	\label{tab:values}
 \end{table}
 
-@todo: discuss
+$t_{wall}$ ist größer als $t_{compute}$, da der Speicher reserviert werden muss.
+$t_{compute}$ nimmt zu, da sich die Komplexität mit steigender Gittergröße erhöht.
 
-\noindent \textbf{b.}
-
-@todo: calc
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\linewidth]{../plot}
+	\caption[$t_{compute,avg}$]{$t_{compute,avg}$}
+	\label{fig:plot}
+\end{figure}
 
 \end{document}
