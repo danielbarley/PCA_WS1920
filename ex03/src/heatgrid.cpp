@@ -5,6 +5,10 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <iomanip>
+
+#include "export.hpp"
+#include "timer.hpp"
 
 void initializeRing(std::vector<double> & timed_grid, size_t size, uint32_t diameter, double heat = 127) {
     double cx, cy;
@@ -34,7 +38,7 @@ void iterate(std::vector<double> & t0_grid, std::vector<double> & t1_grid, size_
     }
 }
 
-int main() {
+int main(int argc, const char** argv) {
     std::vector<std::map<std::string,uint32_t>> givens {
         {{"size", 100}, {"diameter", 35}},
         {{"size", 500}, {"diameter", 175}},
@@ -45,17 +49,34 @@ int main() {
 
     constexpr size_t to_keep = 5;
 
-    for (auto given: givens) {
-        std::array<std::vector<double>, to_keep> grid {}; // only t and t+1 will be kept
+    auto given = givens[atoi(argv[1])];
+    std::cout << "running with size of "
+        << given["size"] << "x" << given["size"] << "\n";
+    std::array<std::vector<double>, to_keep> grid {}; // only a given no of timesteps will be kept
 
-        for (auto & g: grid)
-            g.resize(given["size"]*given["size"], 0); // col+row*given["size"]
+    for (auto & g: grid)
+        g.resize(given["size"]*given["size"], 0); // col+row*given["size"]
 
-        initializeRing(grid[0], given["size"], given["diameter"]);
+    initializeRing(grid[0], given["size"], given["diameter"]);
 
-        for (uint32_t iter = 0; iter < 1000; iter++) {
-            iterate(grid[iter%to_keep], grid[(iter+1)%to_keep], given["size"]);
+    timer::Precision t1 {};
+    for (uint32_t iter = 0; iter < 1000; iter++) {
+        iterate(grid[iter%to_keep], grid[(iter+1)%to_keep], given["size"]);
+        if (iter < 15){
+            std::stringstream ss;
+            ss << std::setfill('0') << "dat/" << given["size"] << "_t" << std::setw(4) << iter << ".pgm";
+            Export::PGM pgm = Export::PGM(ss.str(), grid[iter%to_keep], given["size"], 127);
+            pgm.flush();
         }
-		std::cout << "done with " << given["size"] << "x" << given["size"]<< "\n";
+
     }
+    t1.stop();
+
+    std::cout << "done with "
+        << given["size"] << "x" << given["size"]
+        << " (in " << t1.duration() << "s)\n";
+
+    Export::Export ex = Export::Export("dat/dat.dat");
+    ex.from_df({{given["size"]}, {t1.duration()}});
+    ex.flush();
 }
