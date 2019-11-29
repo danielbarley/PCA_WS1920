@@ -19,6 +19,10 @@ heightrounded, % to avoid spurious underfull messages
 \usepackage[table]{xcolor}
 \usepackage{diagbox}
 \usepackage{lipsum}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+
+\lstMakeShortInline[columns=fixed]|
 
 % Assembler
 \lstdefinelanguage
@@ -68,57 +72,112 @@ heightrounded, % to avoid spurious underfull messages
 
 \subsubsection{Parallele Implementierung mittels PThreads}
 
-@todo: reason
+Aufgrund der Assoziativität der Summe kann diese in beliebiger Reihenfolge ausgeführt werden.
+Wir teilen deshalb jedem Thread eine Partialsumme zu.
+Dazu wird die Gesamtzahl and Iterationen durch die Anzahl Threads geteilt (Ceil Division, überschüßige Iterationen werden später durch Minimum ausgefiltert).
+Geht die Division nicht auf arbeitet der Letzte Thread weniger Elemente ab.
+Somit wird sichergestellt, dass alle Threads etwa gleich lange zur Fertigstellung brauchen.
+Da im Kern Schleife keine Speicherzugriffe stattfinden ist die Aufteilung der Summen frei wählbar.
+Die implementierte Aufteilung wurde der Simplizität wegen verwendet.
+Die einzelnen Partialsummen werden am Ende zusammengeführt.
+Da die Threads auf keine gemeinsamen Speicherstrukturen zugreifen gibt es während der Ausführungszeit keine
+Notwendigkeit zur Synchronisation, erst wenn die Partialsummen aufaddiert werden.
+Dies geschiet hinter der Thread join Barrier wird also erst ausgeführt wenn der letzte Thread beended wurde.
+Alternativ zur Reduktion aus einem Ergebnissarray hätte auch ein \texttt{atomic\_int} verwendet werden können,
+da aber nur sehr wenige Zwischenergebnisse anfallen führt das interne locking welches damit verbunden ist zu 
+schlechterer Performanz.
 
 \subsubsection{Experimente und Evaluation}
 
 \noindent \textbf{a.}
 
-\begin{table}[ht]
+Die Auflösung des \texttt{time} commands ist zu klein um die Wallclock zu messen.
+\begin{table}[htbp]
 	\centering
-	\caption[Ausführungszeit $t_{compute}$ (\si{\second})]{Ausführungszeit $t_{compute}$ (\si{\second})}
-	\begin{tabular}{c|l|l|l|l|l}
+	\caption[Ausführungszeit $t_{compute}$ (\si{\second})]{Ausführungszeit $t_{compute}$ (\si{\milli\second})}
+	\begin{tabular}{c|l|l|l|l|l|l}
 		\hline
-		\cellcolor{gray!40}\textbf{\diagbox{Threads}{n}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{3}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{4}} &
-		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5}} &
-		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{6}} \\
+		\cellcolor{gray!40}\textbf{\diagbox{n}{Threads}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{4}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{8}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{16}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{32}} \\
 		\hline\hline
-		1 &  &  & & & \\\hline
-		2 &  &  & & & \\\hline
-		4 &  &  & & & \\\hline
-		8 &  &  & & & \\\hline
-		16 &  &  & & & \\\hline
-		32 &  &  & & & \\\hline
+		2 & 0.23  & 0.257 & 0.321 & 0.495 & 1.496 & 1.866 \\
+		3 & 0.239 & 0.28  & 0.322 & 0.434 & 1.413 & 1.94  \\
+		4 & 0.294 & 0.318 & 0.338 & 0.531 & 1.507 & 1.953 \\
+		5 & 0.919 & 0.641 & 0.475 & 0.522 & 1.512 & 1.915 \\
+		6 & 7.179 & 3.731 & 2.039 & 1.859 & 1.322 & 2.149 \\
 	\end{tabular}
 	\label{tab:tcomp}
 \end{table}
 
-\begin{table}[ht]
+%\begin{table}[h]
+	%\centering
+	%\caption[Ausführungszeit $t_{wall}$ (\si{\second})]{Ausführungszeit $t_{wall}$ (\si{\milli\second})}
+	%\begin{tabular}{c|l|l|l|l|l}
+		%\hline
+		%\cellcolor{gray!40}\textbf{\diagbox{Threads}{n}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{3}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{4}} &
+		%\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5}} &
+		%\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{6}} \\
+		%\hline\hline
+		%1 &  &  & & & \\\hline
+		%2 &  &  & & & \\\hline
+		%4 &  &  & & & \\\hline
+		%8 &  &  & & & \\\hline
+		%16 &  &  & & & \\\hline
+		%32 &  &  & & & \\\hline
+	%\end{tabular}
+	%\label{tab:twall}
+%\end{table}
+
+\begin{figure}[htpb]
 	\centering
-	\caption[Ausführungszeit $t_{wall}$ (\si{\second})]{Ausführungszeit $t_{wall}$ (\si{\second})}
-	\begin{tabular}{c|l|l|l|l|l}
-		\hline
-		\cellcolor{gray!40}\textbf{\diagbox{Threads}{n}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{3}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{4}} &
-		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5}} &
-		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{6}} \\
-		\hline\hline
-		1 &  &  & & & \\\hline
-		2 &  &  & & & \\\hline
-		4 &  &  & & & \\\hline
-		8 &  &  & & & \\\hline
-		16 &  &  & & & \\\hline
-		32 &  &  & & & \\\hline
-	\end{tabular}
-	\label{tab:twall}
-\end{table}
+	\input{exec_time.pgf}
+	\caption{$ t_{\textrm{compute}} $ für verschiedene Problemgrößen, aufgrund der schlechten auflösung von \texttt{gettimeofday()} unterliegen die Wert für sehr kleine Problemgrößen starken Schwankungen}%
+	\label{fig:exec}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\input{speedup.pgf}
+	\caption{Speedups für verschiedene Problemgrößen, der Overhead der durch Threaderstellung ensteht ist besonders bei kleinen Größen zu sehen, als größter Speedup ist ein Speedup von 5 zu verzeichnen, bei 16 Threads und $ 10^6 $ Iterationen}%
+	\label{fig:speedup}
+\end{figure}
 
 \noindent \textbf{b.}
 
-@todo: error
+Folgende Werte wurden für $ \pi $ berechnet (siehe Tabelle~\ref{tab:pi_approx}).
+Wir erhalten die gleichen Werte für alle Anzahlen an Threads:
+(Innerhalb der Fehlertoleranz, da Floatingpoint Operationen nicht kommutativ)
+
+\begin{table}[htbp]
+	\centering
+	\caption{Approximierte Werte fuer \pi}
+	\label{tab:pi_approx}
+	\begin{tabular}{ccc}
+	\toprule
+		& \multicolumn{2}{c}{Values} \\
+	\cmidrule(r){2-3}
+		Iterations $\log_{10}$ & $\pi$    & $\Delta$   \\
+	\midrule
+		2 & 3.1416009869231227    & \SI{8.33333e-06}{} \\
+		3 &    3.1415927369231298     & \SI{8.33333e-08}{} \\
+		4 & 3.1415926544232335     & \SI{8.3344e-10}{} \\
+		5 & 3.1415926535989005      & \SI{9.10738e-12}{} \\
+		6 & 3.1415926535913021      & \SI{1.50902e-12}{} \\
+	\bottomrule
+	\end{tabular}
+\end{table}
 
 \noindent \textbf{c.}
 
-@todo: discuss
+Die erreichten Speedups sind in Abbildung~\ref{fig:speedup} zu sehen.
+Es ist deutlich zu sehen, dass bei kleinen Problemgrößen der Overhead durch
+threading das Program stark verlangsamt.
+Ab einer Problemgröße von $ 10^5 $ sind positive Speedups zu erreichen, jedoch nur
+bis 8 Threads mit dem maximalen Speedup von ca. 2 bei 4 threads.
+Für $ 10^6 $ erreichen wir einen Speedup von ca. 5.3 bei 16 Threads, danach überwiegt wieder der
+Overhead.
 
 \subsection{Prozesse vs. Threads}
 
