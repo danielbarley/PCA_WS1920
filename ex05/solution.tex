@@ -120,10 +120,19 @@ heightrounded, % to avoid spurious underfull messages
 
 \noindent \textbf{a.}
 
-@todo: answer
+Der Vektorrechner benötigt eine dreimal so hohe Speicherbandbreite wie der Durchsatz des Prozessors.
+Dies begründet sich durch die Eigenschaft des Vektorrechners, dass in jedem Takt beide Operanden einer Operation geholt, und das Ergebnis zurückgeschrieben wird.
+Realisiert wird das durch Memory Interleaving.
+Memory Interleaving bezeichnet die Unterteilung eines Speichers in Module gleicher Größe, die Speicherbänke.
+Sie sind voneinander unabhängig und können zeitlich verschränkt gelesen oder beschrieben werden.
+Daraus resultiert der geforderte höhere Speicherdurchfluss.
 
 \noindent \textbf{b.}
 
-@todo: answer
+Memory Interleaving haben für skalare Werte und kleine Vektoren keinen Mehrwert.
+Abhilfe bieten Vektorregister.
+Sie dienen als schnelle Zwischenspeicher, können aufgrund ihrer Größe jedoch nur Teilobjekte aufnehmen.
+Vektorregister sind nicht verschränkt.
+Aus diesem Grund kann der Zugriff mit beliebiger Adressfolge erfolgen, ohne die effektive Zugriffsbandbreite zu verringern.
 
 \end{document}
