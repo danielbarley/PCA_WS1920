@@ -22,26 +22,19 @@ int main(int argc, const char** argv) {
         nthreads = ap.retrieve<int>("threads");
     }
 
-    Matrix A = Matrix(size, true, nthreads);
+    Matrix A = Matrix(size, size, true, nthreads);
     Vector x = Vector(size, true);
 
     auto row_start = std::chrono::high_resolution_clock::now();
     Vector r = A * x;
     auto row_end = std::chrono::high_resolution_clock::now();
 
-    auto col_start = std::chrono::high_resolution_clock::now();
-    Vector r2 = A | x;
-    auto col_end = std::chrono::high_resolution_clock::now();
 
-    std::printf("%u x %u:\tt_row = %.8gs,\tt_col = %.8gs,\tt_row/t_col = %.8g\n",
+    std::printf("%u : %.8g s\n",
             size,
-            size,
-            std::chrono::duration<double>(row_end - row_start).count(),
-            std::chrono::duration<double>(col_end - col_start).count(),
-            std::chrono::duration<double>(row_end - row_start).count()/
-            std::chrono::duration<double>(col_end - col_start).count()
+            std::chrono::duration<double>(row_end - row_start).count()
             );
 
     (void)r;
-    (void)r2;
+    //(void)r2;
 }

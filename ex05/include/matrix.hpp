@@ -117,19 +117,21 @@ class Matrix {
             Vector o = Vector(ncol);
             std::vector<std::thread> threads;
             threads.resize(nthreads);
-            for (int x = 0; x <= (ncol / nthreads); x++) {
-                for (size_t i = 0; i < std::min(nthreads, (ncol - x * nthreads)); i++) {
+            for (size_t x =0; x < ncol; x+=nthreads){
+                for (size_t i = 0; i < std::min(nthreads, (ncol - x)); i++) {
                     threads[i] = (std::thread(
-                        [&] {
-                            o[x * nthreads + i] = v * (*this)(x * nthreads + i);
-                        }
-                    ));
+                                [&] {
+                                o[x + i] = v * (*this)(x + i);
+                                }
+                                ));
                 }
-                for (auto &thd: threads) {
-                    if (thd.joinable())
-                        thd.join();
+                for (size_t i = 0; i < std::min(nthreads, (ncol - x)); i++) {
+                    if (threads[i].joinable())
+                        threads[i].join();
                 }
             }
+            //for (int x = 0; x < (int)(((double)ncol + .5) / nthreads); x++) {
+            //}
             //for (size_t i = 0; i < this->ncol; i++) {
                 //o[i] = v * (std::valarray<double>)((*this)(i));
             //}
@@ -142,17 +144,17 @@ class Matrix {
 
             std::vector<std::thread> threads(nthreads);
             Vector out = Vector(ncol);
-            for (int x = 0; x <= (ncol / nthreads); x++) {
-                for (size_t i = 0; i < std::min(nthreads, (ncol - x * nthreads)); i++) {
+            for (size_t x =0; x < ncol; x+=nthreads){
+                for (size_t i = 0; i < std::min(nthreads, (ncol - x)); i++) {
                     threads[i] = (std::thread(
                         [&] {
-                            o[i + x * nthreads] = v | (*this)(x * nthreads + i);
+                            o[i + x] = v | (*this)(x + i);
                         }
                     ));
                 }
-                for (auto &thd: threads) {
-                    if (thd.joinable())
-                        thd.join();
+                for (size_t i = 0; i < std::min(nthreads, (ncol - x)); i++) {
+                    if (threads[i].joinable())
+                        threads[i].join();
                 }
             }
             for (auto p: o){

@@ -31,4 +31,4 @@ run:
 	@echo -e "\033[1;34m> compiling on remote\033[0m"
 	@ssh peac_gcc make -C PCA/$(EXE)/ clean all
 	@echo -e "\033[1;34m> Running binary on remote\033[0m"
-	@ssh peac srun time PCA/$(EXE)/$(EXE).out
+	@ssh peac sbatch PCA/$(EXE)/sbatch.sh PCA/$(EXE)/$(EXE).out
