@@ -115,7 +115,24 @@ heightrounded, % to avoid spurious underfull messages
 
 \noindent \textbf{b.}
 
-@todo: complete
+\begin{table}[ht]
+	\centering
+	\caption{Speedup Matrix-Multiplikation}
+	\begin{tabular}{c|l|l|l|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Thr.}{M$\times$N}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{100}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{500}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10000}} \\
+		\hline\hline
+		2 & 1.14 & 1.42 & 1.62 & 1.56 & 1.76 & 1.91 \\\hline
+		4 & 1.04 & 1.17 & 2.23 & 2.33 & 3.10 & 3.33 \\\hline
+		8 & 0.26 & 0.39 & 0.52 & 0.72 & 3.89 & 4.20 \\\hline
+		16 & 0.29 & 0.34 & 0.37 & 0.55 & 1.75 & 2.30 \\\hline
+		32 & 0.28 & 0.28 & 0.37 & 0.99 & 1.94 & 2.75 \\\hline
+	\end{tabular}
+	\label{tab:twall}
+\end{table}
 
 \subsection{Vektorrechner - Memory Interleaving}
 
