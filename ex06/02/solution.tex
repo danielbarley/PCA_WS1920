@@ -1,0 +1,139 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[
+top=2cm,
+bottom=2cm,
+left=3cm,
+right=2cm,
+headheight=17pt, % as per the warning by fancyhdr
+includehead,includefoot,
+heightrounded, % to avoid spurious underfull messages
+]{geometry} 
+\geometry{a4paper}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[table]{xcolor}
+\usepackage{diagbox}
+\usepackage{lipsum}
+
+% Assembler
+\lstdefinelanguage
+{Assembler} % based on the "x86masm" dialect
+% with these extra keywords:
+{morekeywords={call, mov}} % etc.
+
+% Lecture Name, exercise number, group number/members
+\newcommand{\lecture}{Parallel Computer Architecture}
+\newcommand{\exercise}{Exercise 5}
+\newcommand{\groupnumber}{Group 04}
+\newcommand{\groupmembersshort}{Barley, Barth, Nisblé}
+\newcommand{\groupmemberslist}{Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick}
+\newcommand{\duedate}{2019-12-10, 14:00}
+
+\fancyhf{}
+\fancyhead[L]{\groupnumber}
+\fancyhead[R]{\textsc{\groupmembersshort}}
+\fancyfoot[C]{\lecture: \exercise}
+\fancyfoot[R] {\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+
+\begin{document}
+	\begin{titlepage}
+		\centering
+		
+		{\scshape\LARGE Universität Heidelberg\\Institute for Computer Engineering (ZITI) \par}
+		\vspace{1.5cm}
+		{\scshape\Large Master of Science Computer Engineering \par}
+		\vspace{0.5cm}
+		{\scshape\Large \lecture \par}
+		\vspace{1.5cm}
+		{\huge\bfseries \exercise \par}
+		\vspace{2cm}
+		{\Large \groupnumber \itshape  \\ \groupmemberslist \par}
+		\vfill
+		
+		
+		% Bottom of the page
+		{\large Due date \duedate \par}
+	\end{titlepage}
+
+\setcounter{section}{5}
+\subsection{Matrix-Multiplikation revisited}
+\setcounter{subsubsection}{1}
+
+\subsubsection{Experimente und Evaluation}
+
+\noindent \textbf{a.}
+
+	\begin{table}[H]
+		\centering
+		\caption[Ausführungszeit $t_{compute}$ (\si{\second})]{Ausführungszeit $t_{compute}$ (\si{\second})}
+		\begin{tabular}{c|l|l|l|l|l|l}
+			\hline
+			\cellcolor{gray!40}\textbf{\diagbox{Thr.}{M$\times$N}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{100}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{500}} &
+			\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1000}} &
+			\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5000}} &
+			\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10000}} \\
+			\hline\hline
+			1 & .00035598 & .003060224 & .021459077 & .058538088 & .97590037 & 4.1627889 \\\hline
+			2 & .00031318 & .00215956 & .013287198 & .037405488 & .55434931 & 2.1772173 \\\hline
+			4 & .000342366 & .002607658 & .009611136 & .025092157 & .31555298 & 1.2518226 \\\hline
+			8 & .001353408 & .007944582 & .041451281 & .081234262 & .250685 & .99027474 \\\hline
+			16 & .001241185 & .009079268 & .057545405 & .10717686 & .55614014 & .8073803 \\\hline
+			32 & .001328589 & .011082465 & .057800985 & .058750333 & .50429179 & 1.5142876 \\\hline
+		\end{tabular}
+		\label{tab:tcomp}
+	\end{table}
+
+
+\begin{table}[ht]
+	\centering
+	\caption[Ausführungszeit $t_{wall}$ (\si{\second})]{Ausführungszeit $t_{wall}$ (\si{\minute:\second})}
+	\begin{tabular}{c|l|l|l|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Thr.}{M$\times$N}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{100}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{500}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{5000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10000}} \\
+		\hline\hline
+		1 & 0:00.00 & 0:00.00 & 0:00.03 & 0:00.10 & 0:02.25 & 0:08.84 \\\hline
+		2 & 0:00.00 & 0:00.00 & 0:00.02 & 0:00.08 & 0:01.72 & 0:06.86 \\\hline
+		4 & 0:00.00 & 0:00.00 & 0:00.02 & 0:00.07 & 0:01.48 & 0:05.92 \\\hline
+		8 & 0:00.00 & 0:00.01 & 0:00.05 & 0:00.13 & 0:01.41 & 0:05.67 \\\hline
+		16 & 0:00.00 & 0:00.01 & 0:00.07 & 0:00.15 & 0:01.72 & 0:06.48 \\\hline
+		32 & 0:00.00 & 0:00.01 & 0:00.07 & 0:00.10 & 0:01.67 & 0:06.21 \\\hline
+	\end{tabular}
+	\label{tab:twall}
+\end{table}
+
+\noindent \textbf{b.}
+
+@todo: complete
+
+\subsection{Vektorrechner - Memory Interleaving}
+
+\noindent \textbf{a.}
+
+Der Vektorrechner benötigt eine dreimal so hohe Speicherbandbreite wie der Durchsatz des Prozessors.
+Dies begründet sich durch die Eigenschaft des Vektorrechners, dass in jedem Takt beide Operanden einer Operation geholt, und das Ergebnis zurückgeschrieben wird.
+Realisiert wird das durch Memory Interleaving.
+Memory Interleaving bezeichnet die Unterteilung eines Speichers in Module gleicher Größe, die Speicherbänke.
+Sie sind voneinander unabhängig und können zeitlich verschränkt gelesen oder beschrieben werden.
+Daraus resultiert der geforderte höhere Speicherdurchfluss.
+
+\noindent \textbf{b.}
+
+Memory Interleaving hat für skalare Werte und kleine Vektoren keinen Mehrwert.
+Abhilfe bieten Vektorregister.
+Sie dienen als schnelle Zwischenspeicher, können aufgrund ihrer Größe jedoch nur Teilobjekte aufnehmen.
+Vektorregister sind nicht verschränkt.
+Aus diesem Grund kann der Zugriff mit beliebiger Adressfolge erfolgen, ohne die effektive Zugriffsbandbreite zu verringern.
+
+\end{document}
