@@ -100,7 +100,7 @@ heightrounded, % to avoid spurious underfull messages
 
 \begin{table}[ht]
 	\centering
-	\caption{Speed-Up}
+	\caption{speed-up}
 	\begin{tabular}{c|l|l|l|l|l}
 		\hline
 		\cellcolor{gray!40}\textbf{\diagbox{Thr.}{n}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{2}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{3}} &
@@ -143,6 +143,24 @@ heightrounded, % to avoid spurious underfull messages
 
 	\begin{table}[H]
 	\centering
+	\caption[static speed-up]{static speed-up}
+	\begin{tabular}{c|c|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Thr.}{N$\times$N}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{100}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{500}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10000}} \\
+		\hline\hline
+		2 & - & 2,000 & 1,333 & 1,209 \\\hline
+		4 & - & 2,000 & 1,600 & 1,465 \\\hline
+		8 & - & 2,000 & 1,600 & 1,481 \\\hline
+		16 & - & 2,000 & 1,600 & 1,450 \\\hline
+		32 & - & 1,000 & 1,600 & 1,452 \\\hline
+	\end{tabular}
+	\label{tab:statspd}
+\end{table}
+
+	\begin{table}[H]
+	\centering
 	\caption[Ausführungszeit $t_{wall}$ (\si{\minute}:\si{\second}), dynamic]{Ausführungszeit $t_{wall}$ (\si{\minute}:\si{\second}), dynamic}
 	\begin{tabular}{c|l|l|l|l}
 		\hline
@@ -162,6 +180,24 @@ heightrounded, % to avoid spurious underfull messages
 
 	\begin{table}[H]
 	\centering
+	\caption[dynamic speed-up]{dynamic speed-up}
+	\begin{tabular}{c|c|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Thr.}{N$\times$N}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{100}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{500}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10000}} \\
+		\hline\hline
+		2 & - & 2,000 & 1,333 & 1,232 \\\hline
+		4 & - & 2,000 & 1,600 & 1,440 \\\hline
+		8 & - & 2,000 & 1,600 & 1,542 \\\hline
+		16 & - & 2,000 & 1,600 & 1,430 \\\hline
+		32 & - & 2,000 & 1,600 & 1,450 \\\hline
+	\end{tabular}
+	\label{tab:dynspd}
+\end{table}
+
+	\begin{table}[H]
+	\centering
 	\caption[Ausführungszeit $t_{wall}$ (\si{\minute}:\si{\second}), guided]{Ausführungszeit $t_{wall}$ (\si{\minute}:\si{\second}), guided}
 	\begin{tabular}{c|l|l|l|l}
 		\hline
@@ -177,6 +213,24 @@ heightrounded, % to avoid spurious underfull messages
 		32 & 0:00.00 & 0:00.01 & 0:00.06 & 0:05.77 \\\hline
 	\end{tabular}
 	\label{tab:twallgui}
+\end{table}
+
+	\begin{table}[H]
+	\centering
+	\caption[guided speed-up]{guided speed-up}
+	\begin{tabular}{c|c|l|l|l}
+		\hline
+		\cellcolor{gray!40}\textbf{\diagbox{Thr.}{N$\times$N}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{100}} & \multicolumn{1}{c}{\cellcolor{gray!40}\textbf{500}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{1000}} &
+		\multicolumn{1}{c}{\cellcolor{gray!40}\textbf{10000}} \\
+		\hline\hline
+		2 & - & 2,000 & 1,333 & 1,263 \\\hline
+		4 & - & 2,000 & 1,600 & 1,423 \\\hline
+		8 & - & 2,000 & 1,600 & 1,543 \\\hline
+		16 & - & 2,000 & 1,600 & 1,423 \\\hline
+		32 & - & 2,000 & 1,333 & 1,423 \\\hline
+	\end{tabular}
+	\label{tab:guidspd}
 \end{table}
 
 \end{document}
