@@ -33,7 +33,7 @@ heightrounded, % to avoid spurious underfull messages
 \newcommand{\groupnumber}{Group 04}
 \newcommand{\groupmembersshort}{Barley, Barth, Nisblé}
 \newcommand{\groupmemberslist}{Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick}
-\newcommand{\duedate}{2020-01-10, 14:00}
+\newcommand{\duedate}{2020-01-15, 12:00}
 
 \fancyhf{}
 \fancyhead[L]{\groupnumber}
@@ -65,22 +65,26 @@ heightrounded, % to avoid spurious underfull messages
 	\end{titlepage}
 
 \setcounter{section}{7}
-\subsection{Ping-Pong und Ping-Exchange in MPI}
+%\subsection{Ping-Pong und Ping-Exchange in MPI}
 
-@todo: code
+%@todo: code
 
-\subsection{Experimente und Evaluation}
+%\subsection{Experimente und Evaluation}
 
-@todo: complete
+%@todo: complete
 
+\setcounter{subsection}{2}
 \subsection{Hardware Affinität und Performance}
 
 \noindent \textbf{a.}
 
-@todo: answer
+Wird ein Prozess an bestimmte NUMA Nodes oder CPU Cores gebunden, so erfolgt der Speicherzugriff lokal.
+Dies ist schneller als auf einen entfernten Speicher, da keine Verzögerung durch das Verbindungsnetzwerk erfolgt.
+Das Verbindungsnetzwerk führt den globalen Zugriff aus.
+Durch die Reduzierung der globalen Kommunikationslast durch das Binden der Prozesse an NUMA Nodes oder CPU Cores, verringern sich die Anforderungen an das Verbindungsnetzwerk. 
 
-\noindent \textbf{b.}
+%\noindent \textbf{b.}
 
-@todo: complete
+%@todo: complete
 
 \end{document}
