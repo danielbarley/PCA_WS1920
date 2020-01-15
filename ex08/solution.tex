@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[
+top=2cm,
+bottom=2cm,
+left=3cm,
+right=2cm,
+headheight=17pt, % as per the warning by fancyhdr
+includehead,includefoot,
+heightrounded, % to avoid spurious underfull messages
+]{geometry} 
+\geometry{a4paper}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[table]{xcolor}
+\usepackage{diagbox}
+\usepackage{lipsum}
+
+% Assembler
+\lstdefinelanguage
+{Assembler} % based on the "x86masm" dialect
+% with these extra keywords:
+{morekeywords={call, mov}} % etc.
+
+% Lecture Name, exercise number, group number/members
+\newcommand{\lecture}{Parallel Computer Architecture}
+\newcommand{\exercise}{Exercise 8}
+\newcommand{\groupnumber}{Group 04}
+\newcommand{\groupmembersshort}{Barley, Barth, Nisblé}
+\newcommand{\groupmemberslist}{Barley, Daniel\\Barth, Alexander\\Nisblé, Patrick}
+\newcommand{\duedate}{2020-01-21, 14:00}
+
+\fancyhf{}
+\fancyhead[L]{\groupnumber}
+\fancyhead[R]{\textsc{\groupmembersshort}}
+\fancyfoot[C]{\lecture: \exercise}
+\fancyfoot[R] {\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+
+\begin{document}
+	\begin{titlepage}
+		\centering
+		
+		{\scshape\LARGE Universität Heidelberg\\Institute for Computer Engineering (ZITI) \par}
+		\vspace{1.5cm}
+		{\scshape\Large Master of Science Computer Engineering \par}
+		\vspace{0.5cm}
+		{\scshape\Large \lecture \par}
+		\vspace{1.5cm}
+		{\huge\bfseries \exercise \par}
+		\vspace{2cm}
+		{\Large \groupnumber \itshape  \\ \groupmemberslist \par}
+		\vfill
+		
+		
+		% Bottom of the page
+		{\large Due date \duedate \par}
+	\end{titlepage}
+
+\setcounter{section}{8}
+\subsection{Numerische Integration revisited again$^2$}
+
+\subsubsection{Parallele Implementierung mittels MPI}
+
+@todo: code
+
+\subsubsection{Evaluation und Experimente}
+
+\noindent \textbf{a.}
+
+\noindent \textbf{b.}
+
+\noindent \textbf{c.}
+
+\subsection{MPI Datentypen}
+
+@todo: answer
+
+\subsection{Semaphore}
+
+@todo: answer
+
+\end{document}
