@@ -85,9 +85,13 @@ MPI Datentypen definieren Speicherlayouts.
 Sie stellen keine Datentypen im Sinne von Programmiersprachen dar.
 Alle elementaren Datentypen der Programmiersprachen werden auf MPI Datentypen abgebildet.
 Das erleichtert die effiziente Übertragung komplizierter Datenstrukturen.
-\iffalse
+
 \subsection{Semaphore}
 
-@todo: answer
-\fi
+Eine Critical Region ist ein Codeabschnitt, der exklusiv von einem Programm ausgeführt werden muss.
+Eine Interrupt-Abschaltung im Mehrprozessorbetrieb blockiert die exklusive Programmverarbeitung.
+Eine Semaphore stellt einen Mechanismus dar, der einen exklusiven Zugriff auf die Ressource zulässt.
+Somit kann ein anderes Programm die Critical Region währenddessen nicht verwenden.
+Eine Semaphore ist eine nicht negative Integer Variable, die von Threads geteilt werden kann.
+
 \end{document}
