@@ -66,7 +66,7 @@ heightrounded, % to avoid spurious underfull messages
 
 \setcounter{section}{8}
 \subsection{Numerische Integration revisited again$^2$}
-
+\iffalse
 \subsubsection{Parallele Implementierung mittels MPI}
 
 @todo: code
@@ -78,13 +78,16 @@ heightrounded, % to avoid spurious underfull messages
 \noindent \textbf{b.}
 
 \noindent \textbf{c.}
-
+\fi
 \subsection{MPI Datentypen}
 
-@todo: answer
-
+MPI Datentypen definieren Speicherlayouts.
+Sie stellen keine Datentypen im Sinne von Programmiersprachen dar.
+Alle elementaren Datentypen der Programmiersprachen werden auf MPI Datentypen abgebildet.
+Das erleichtert die effiziente Übertragung komplizierter Datenstrukturen.
+\iffalse
 \subsection{Semaphore}
 
 @todo: answer
-
+\fi
 \end{document}
